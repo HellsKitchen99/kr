@@ -1,0 +1,24 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./app/Dockerfile
+    ports:
+      - "2222:1111"
+    env_file:
+      - .env
+    volumes:
+      - shared_data:/data
+
+  writer:
+    build: 
+      context: .
+      dockerfile: ./writer/Dockerfile
+    volumes:
+      - shared_data:/data
+    depends_on:
+      - app
+
+
+volumes:
+  shared_data:
